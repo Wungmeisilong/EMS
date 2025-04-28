@@ -2,7 +2,9 @@
 
 WorkerManager::WorkerManager()
 {
-
+	//初始化属性
+	this->m_EmpArray = NULL;
+	this->m_EmpNum = 0;
 }
 void WorkerManager::Show_Menu()
 {
@@ -24,6 +26,38 @@ void WorkerManager::ExitSystem()
 	cout << "欢迎下次再使用！！" << endl;
 	system("pause");
 	exit(0);	 
+}
+void WorkerManager::Add_Emp()
+{
+	//提示
+	cout << "请输入要添加的人数" << endl;
+
+	//保存输入的人数
+	int addNum = 0;
+	cin >> addNum;
+	if (addNum > 0)
+	{
+		//添加
+		//计算添加空间大小
+		int newSize = this->m_EmpNum + addNum;
+
+		//开辟空间
+		Worker **newSpace = new Worker *[newSize];
+
+		//如果原来有数据要复制到新空间下
+		if (this->m_EmpArray != NULL)
+		{
+			for (int i = 0; i < this->m_EmpNum; i++)
+			{
+				newSpace[i] = this->m_EmpArray[i];
+			}
+		}
+	}
+	else
+	{
+
+	}
+
 }
 WorkerManager::~WorkerManager()
 {
