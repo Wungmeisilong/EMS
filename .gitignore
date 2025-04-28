@@ -1,0 +1,22 @@
+# 忽略 Visual Studio 生成的文件
+.vs/
+x64/
+*.sdf
+*.suo
+*.user
+*.vcxproj.user
+
+# 忽略编译输出
+Debug/
+Release/
+*.exe
+*.dll
+*.ilk
+*.pdb
+
+# 忽略项目自动生成文件
+*.vcxproj.filters
+*.vxproj.store
+
+# 忽略系统文件
+Thumbs.db
