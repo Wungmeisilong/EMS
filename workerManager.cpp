@@ -2,9 +2,52 @@
 
 WorkerManager::WorkerManager()
 {
-	//初始化属性
-	this->m_EmpArray = NULL;
-	this->m_EmpNum = 0;
+	//1，判断文件是否存在
+	ifstream ifs;
+	ifs.open(FILENAME, ios::in);
+	if (!ifs.is_open())
+	{
+		cout << "文件不存在" << endl;
+		//初始化属性
+		this->m_EmpArray = NULL;
+		this->m_EmpNum = 0;
+		this->m_FileIsEmpty = true;
+
+		ifs.close();
+		return;
+	}
+	//文件存在，但是没有记录
+	char ch;
+	ifs >> ch;
+	if (ifs.eof())
+	{
+		//文件为空
+		cout << "文件为空" << endl;
+		//初始化属性
+		this->m_EmpArray = NULL;
+		this->m_EmpNum = 0;
+		this->m_FileIsEmpty = true;
+
+		ifs.close();
+		return;
+	}
+	//文件存在,并有记录
+	int num = this->Get_EmpNUm();
+	cout << "职工人数为：" << num<<endl;
+	this->m_EmpNum = num;
+	//开辟空间
+	this->m_EmpArray = new Worker * [this->m_EmpNum];
+	//将数据存到数组中
+	this->initEmp();
+
+	////测试代码
+	//for (int i = 0; i < this->m_EmpNum; i++)
+	//{
+	//	cout << "职工编号" << this->m_EmpArray[i]->m_Id << " "
+	//		<< "职工姓名：" << this->m_EmpArray[i]->m_Name << " "
+	//		<< "职工职称：" << this->m_EmpArray[i]->GetDeptName() << endl;
+
+	//}
 }
 void WorkerManager::Show_Menu()
 {
@@ -101,6 +144,8 @@ void WorkerManager::Add_Emp()
 		//更新人数
 		this->m_EmpNum = newSize;
 
+		//更新文件是不是空
+		this->m_FileIsEmpty = false;
 		//成功添加后保存到文件中
 		Save();
 
@@ -130,6 +175,56 @@ void WorkerManager::Save()
 	}
 	//关闭文件
 	ofs.close();
+}
+int WorkerManager::Get_EmpNUm()
+{
+	ifstream ifs;
+	ifs.open(FILENAME, ios::in);
+
+	int id;
+	string name;
+	int did;
+
+	int empNum = 0;
+
+	while (ifs >> id && ifs >> name && ifs >> did)
+	{
+		empNum++;
+	}
+	return empNum;
+}
+void WorkerManager::initEmp()
+{
+	//打开文件
+	ifstream ifs;
+	ifs.open(FILENAME, ios::in);
+
+	int id;
+	string name;
+	int dId;
+
+	int index = 0;
+
+	while (ifs >> id && ifs >> name && ifs >> dId)
+	{
+		Worker* worker = NULL;
+		if (dId == 1)
+		{
+			worker = new Employee(id, name, dId);
+		}
+		else if (dId == 2)
+		{
+			worker = new Manager(id, name, dId);
+		}
+		else
+		{
+			worker = new Boss(id, name, dId);
+		}
+		this->m_EmpArray[index] = worker;//将数据存储在指针数组中
+		index++;//记录人数
+	}
+	//关闭文件
+	ifs.clear();
 }
 WorkerManager::~WorkerManager()
 {

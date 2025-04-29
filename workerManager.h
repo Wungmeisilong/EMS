@@ -24,6 +24,15 @@ public:
 
 	//保存文件函数
 	void Save();
+
+	//判断文件是否为空
+	bool m_FileIsEmpty;
+
+	//统计文件中的人数
+	int Get_EmpNUm();
+
+	//如果文件存在且有记录，读出数据并存储在数组中，初始化员工人数
+	void initEmp();
 	//记录数组中有多少个职工人数
 	int m_EmpNum;
 
