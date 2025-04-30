@@ -36,6 +36,8 @@ public:
 	//记录数组中有多少个职工人数
 	int m_EmpNum;
 
+	//显示职工函数
+	void Show_Emp();
 	//职工数组指针，使用双重指针管理worker数组指针，数组类型是*Worker
 	Worker** m_EmpArray;
 	~WorkerManager();

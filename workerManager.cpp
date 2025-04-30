@@ -22,7 +22,7 @@ WorkerManager::WorkerManager()
 	if (ifs.eof())
 	{
 		//文件为空
-		cout << "文件为空" << endl;
+		//cout << "文件为空" << endl;
 		//初始化属性
 		this->m_EmpArray = NULL;
 		this->m_EmpNum = 0;
@@ -33,7 +33,7 @@ WorkerManager::WorkerManager()
 	}
 	//文件存在,并有记录
 	int num = this->Get_EmpNUm();
-	cout << "职工人数为：" << num<<endl;
+	//cout << "职工人数为：" << num<<endl;
 	this->m_EmpNum = num;
 	//开辟空间
 	this->m_EmpArray = new Worker * [this->m_EmpNum];
@@ -225,6 +225,24 @@ void WorkerManager::initEmp()
 	}
 	//关闭文件
 	ifs.clear();
+}
+void WorkerManager::Show_Emp()
+{
+	//判断文件是否为空
+	if (this->m_FileIsEmpty)
+	{
+		cout << "文件不存在或为空" << endl;
+
+	}
+	else
+	{
+		for (int i = 0; i < this->m_EmpNum; i++)
+		{
+			this->m_EmpArray[i]->showInfo();
+		}
+		system("pause");
+		system("cls");
+	}
 }
 WorkerManager::~WorkerManager()
 {
