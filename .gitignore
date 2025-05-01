@@ -20,3 +20,5 @@ Release/
 
 # 忽略系统文件
 Thumbs.db
+
+empFile.txt

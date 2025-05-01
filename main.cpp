@@ -25,6 +25,7 @@ int main()
 			break;
 		case 2: //显示职工
 			wm.Show_Emp();
+
 			break;
 		case 3: //删除职工
 			wm.Del_Emp();
@@ -33,19 +34,13 @@ int main()
 			wm.Mod_Emp();
 			break;
 		case 5: //查找职工
-			break;
-		case 6: //按照编号排序
 			wm.Find_Emp();
 			break;
+		case 6: //按照编号排序
+			wm.Sort_Emp();
+			break;
 		case 7: //清空文件
-		{
-			int i = 0;
-			for (; i < 6; i++)
-			{
-				cout << "第"<<i+1<<"次输出："<<i << endl;
-			}
-			cout << "第" << i + 1 << "次输出：" << i << endl;
-		}
+			wm.Clean_File();
 			break;
 		default:
 			cout << "输入有误，请重新输入" << endl;

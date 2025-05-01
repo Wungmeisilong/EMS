@@ -1,2 +1,5 @@
 ﻿  main.cpp
+  workerManager.cpp
+D:\myblog3\基于C++职工管理体系\职工管理系统\workerManager.cpp(360,12): warning C4305: “初始化”: 从“int”到“bool”截断
+  正在生成代码...
   职工管理系统.vcxproj -> D:\myblog3\基于C++职工管理体系\职工管理系统\x64\Debug\职工管理系统.exe

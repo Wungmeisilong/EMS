@@ -50,6 +50,15 @@ public:
 	//查找职工
 	int IsNameExist(string name);
 	void Find_Emp();
+
+	//按照职工编号排序
+	void Sort_Emp();
+
+	//清空操作
+	void Clean_File();
+
+	//清除显示的内容
+	void Cls_coutContents();
 	//职工数组指针，使用双重指针管理worker数组指针，数组类型是*Worker
 	Worker** m_EmpArray;
 	~WorkerManager();

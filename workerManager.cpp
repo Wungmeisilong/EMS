@@ -151,14 +151,12 @@ void WorkerManager::Add_Emp()
 
 		//提示添加成功
 		cout << "添加成功，添加了"<<addNum<<"人" << endl;
-		system("pause");
-		system("cls");
 	}
 	else
 	{
 		cout << "输入错误" << endl;
 	}
-
+	this->Cls_coutContents();
 }
 void WorkerManager::Save()
 {
@@ -240,9 +238,8 @@ void WorkerManager::Show_Emp()
 		{
 			this->m_EmpArray[i]->showInfo();
 		}
-		system("pause");
-		system("cls");
 	}
+	this->Cls_coutContents();
 }
 // 删除职工
 void WorkerManager::Del_Emp()
@@ -278,8 +275,7 @@ void WorkerManager::Del_Emp()
 			cout << "职工编号不存在" << endl;
 		}
 	}
-	system("pause");
-	system("cls");
+	this->Cls_coutContents();
 }
 //判断职工是否存在
 int WorkerManager::IsExist(int id)
@@ -296,7 +292,6 @@ int WorkerManager::IsExist(int id)
 	}
 	return index;
 }
-
 void WorkerManager::Mod_Emp()
 {
 	if (this->m_FileIsEmpty)
@@ -359,8 +354,7 @@ void WorkerManager::Mod_Emp()
 			cout << "修改失败，员工编号不存在" << endl;
 		}
 	}
-	system("pause");
-	system("cls");
+	this->Cls_coutContents();
 }
 int WorkerManager::IsNameExist(string name) {
 	bool flag = -1;
@@ -434,6 +428,98 @@ void WorkerManager::Find_Emp()
 			break;
 		}
 	}
+	this->Cls_coutContents();
+}
+void WorkerManager::Sort_Emp()
+{
+	if (this->m_FileIsEmpty)
+	{
+		cout << "文件不存在或为空" << endl;
+		this->Cls_coutContents();
+	}
+	else
+	{
+		//文件存在输入编号，设置升序，降序
+		cout << "输入数字设置排序" << endl;
+		cout << "1:升序" << endl;
+		cout << "2:降序" << endl;
+
+		int select = 0;
+		cin >> select;
+		for (int i = 0; i < this->m_EmpNum; i++)
+		{
+			//假设i下标对象中的编号就是最大的
+			int minOrMan = i;
+			for (int j = 0; j < this->m_EmpNum; j++)
+			{
+				if (select == 1)//升序
+				{
+					if (this->m_EmpArray[minOrMan]->m_Id > this->m_EmpArray[j]->m_Id)//如果是大于，把下标赋值给minOrman
+					{
+						minOrMan = j;
+					}
+				}
+				else 
+				{
+					if (this->m_EmpArray[minOrMan]->m_Id < this->m_EmpArray[j]->m_Id)//如果是小于，把下标赋值给minOrman
+					{
+						minOrMan = j;
+					}
+				}
+			}
+
+			//以升序为例，当假设的值最大值minOrMan与j中对象比较完后，
+			// 就能得到第一轮真正最大的下标，这个是时候交换数据即可
+			if (minOrMan != i)
+			{
+				Worker* temp = this->m_EmpArray[i];
+				this->m_EmpArray[i] = this->m_EmpArray[minOrMan];
+				this->m_EmpArray[minOrMan] = temp;
+			}
+		}
+		cout << "排序成功" << endl;
+		//同步数据到文件
+		this->Save();
+		this->Show_Emp();
+	}
+}
+void WorkerManager::Clean_File()
+{
+	cout << "确定清空文件" << endl;
+	cout << "1:确定" << endl;
+	cout << "2:取消" << endl;
+
+	int select = 0;
+	cin >> select;
+
+	if(select == 1)
+	{
+		//清空文件
+		ofstream ofs(FILENAME,ios::trunc);
+		ofs.close();
+
+		//判断存储指针对象的数组是否为空，为空则需要一一清楚堆区的每个职工
+		if (this->m_EmpArray != NULL)
+		{
+			for (int i = 0; i < this->m_EmpNum; i++)
+			{
+				delete this->m_EmpArray[i];
+				this->m_EmpArray[i] = NULL;//避免野指针
+			}
+
+			//释放指针数组
+			delete[] this->m_EmpArray;
+			this->m_EmpArray = NULL;
+			this->m_EmpNum = 0;
+			this->m_FileIsEmpty = true;
+
+			cout << "文件清除成功。" << endl;
+		}
+	}
+	this->Cls_coutContents();
+}
+void WorkerManager::Cls_coutContents() 
+{
 	system("pause");
 	system("cls");
 }
@@ -441,6 +527,11 @@ WorkerManager::~WorkerManager()
 {
 	if (this->m_EmpArray != NULL)//创建在堆区的数据会被清除
 	{
+		for (int i = 0; i < this->m_EmpNum; i++)
+		{
+			delete this->m_EmpArray[i];
+			this->m_EmpArray[i] = NULL;//避免野指针
+		}
 		delete[] m_EmpArray;
 		m_EmpArray = NULL;
 	}
