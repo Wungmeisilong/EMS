@@ -38,6 +38,18 @@ public:
 
 	//显示职工函数
 	void Show_Emp();
+
+	// 删除职工
+	void Del_Emp();
+	//判断职工是否存在
+	int IsExist(int id);
+
+	//修改职工
+	void Mod_Emp();
+
+	//查找职工
+	int IsNameExist(string name);
+	void Find_Emp();
 	//职工数组指针，使用双重指针管理worker数组指针，数组类型是*Worker
 	Worker** m_EmpArray;
 	~WorkerManager();
